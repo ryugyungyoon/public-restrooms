@@ -1,0 +1,142 @@
+###############################
+# server setting
+###############################
+###############################
+# common environment setting
+###############################
+# spring common setting
+# spring common setting
+spring:
+  application:
+    name: tobis-web
+  # profiles
+  profiles:
+    default: local
+  # message ??
+  messages:
+    cache-duration: -1
+    basename: messages/message
+    encoding: UTF-8
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+  # html view ??
+  thymeleaf:
+    prefix: classpath:templates/
+    suffix: .html
+    cache:  false
+  # ?? ??? ??
+  web:
+    resources:
+      chain:
+        enabled: true
+        strategy:
+          content:
+            enabled: true
+            paths: /**
+    error:
+      include-exception: false
+      include-stacktrace: never
+      path: '/error'
+      whitelabel:
+        enabled: true
+  # html/css ??? ??? ??
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+
+  #mail
+  mail:
+    default-encoding: UTF-8
+    host: smtp.gmail.com
+    port: 587
+    username: alslehs@gmail.com
+    password: lilooiyieknikmtz
+    properties:
+      mail:
+        smtp:
+          auth: true
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+          starttls:
+            enable: true
+          connectiontimeout: 5000
+        debug: false
+
+# mybatis
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:sql/*.xml
+  type-aliases-package: com.tobis.common.persistence.vo.**
+
+# actuactormanagement setting
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: /tobis/monitor
+
+# ?? ??
+tobis:
+  value:
+    file:
+      tempULDir: /tobis/attachements/uploadFiles/temp/
+      liveULDir: /tobis/attachements/uploadFiles/live/
+      tempDLDir: /tobis/attachements/downloadFiles/temp/
+      liveDLDir: /tobis/attachements/downloadFiles/live/
+      tempGroupDir: /tobis/attachements/tempGroupFiles/
+      openPdfDir: /tobis/open/pdf/
+      batchPdfDir: /tobis/batch/pdf/
+    sms:
+      smsUrl: https://apis.aligo.in/send/
+      userId: ktobis
+      key: k31xsuvny6r1t4x6bepdwdkh1ft6j2bm
+      sender: 1644-2591
+    estimate:
+      version: v05
+      itemMarginRate: 0.1
+      itemTestTime: 1.5
+      passedDays: 7
+      channelType: PC
+      imageQuality: 0.4
+    tracking:
+      member:
+        usedYn: Y
+        loginYn: Y
+    item:
+      parts:
+        searchPossibleCnt: 30
+ncp:
+  ocr:
+    auth:
+      name: X-OCR-SECRET
+      key: YWxGamp2THZ6eWdlYlJxSGVtR2hYekV2cndpWkdRaWY=
+    url: https://o7b4sr42ya.apigw.ntruss.com/custom/v1/20900/c2139ae3015457f94b70d7655ae9164d42e895f2a9d26d23c0f0588729c2c641/general
+    timeout: 5
+api:
+  # ????(??:??)
+  terms:
+    accident: 3
+  dbins:
+    seq: 5
+    url: http://210.124.233.219:20171/ebms/incom/5A81
+    accident:
+      work-code: '0200'
+      dgsDvcd: tobis01
+    claim:
+      work-code: '0300'
+      dgsDvcd: tobis02
+  hdins:
+    seq: 7
+    url: http://115.21.8.33:56200
+    claim:
+      trace-cd: 100
+  ssins:
+    seq: 8
+pg:
+  default: KG_MOBILIANS
