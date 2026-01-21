@@ -25,7 +25,7 @@ function NaverMap() {
     // ===============================
     // 2. 화장실 마커는 여기!
     // ===============================
-    const restroomLatLng = new window.naver.maps.LatLng(37.5658, 126.9770);
+  /*  const restroomLatLng = new window.naver.maps.LatLng(37.5658, 126.9770);
 
     const restroomMarker = new window.naver.maps.Marker({
       position: restroomLatLng,
@@ -45,7 +45,41 @@ function NaverMap() {
 
     window.naver.maps.Event.addListener(restroomMarker, "click", () => {
       infoWindow.open(mapRef.current, restroomMarker);
-    });
+    });*/
+
+    fetch("http://localhost:8080/api/restrooms")
+      .then(res => res.json())
+      .then((restrooms) => {
+        restrooms.forEach((restroom: any) => {
+          const position = new window.naver.maps.LatLng(
+            restroom.lat,
+            restroom.lng
+          );
+
+          const marker = new window.naver.maps.Marker({
+            position,
+            map: mapRef.current,
+            title: restroom.name,
+          });
+
+          const infoWindow = new window.naver.maps.InfoWindow({
+            content: `
+              <div style="padding:8px;font-size:13px;">
+                🚻 <b>${restroom.name}</b><br/>
+                ${restroom.open24h ? "24시간 이용 가능" : "운영시간 제한"}
+              </div>
+            `,
+          });
+
+          window.naver.maps.Event.addListener(marker, "click", () => {
+            infoWindow.open(mapRef.current, marker);
+          });
+        });
+      })
+      .catch(err => {
+        console.error("API 호출 실패:", err);
+      });
+
 
     // ===============================
     // 3. 그 다음에 GPS watchPosition
